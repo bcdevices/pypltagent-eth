@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 from command_handler import execute_command
 from upload_handler import handle_upload
 
+
 class CustomHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_PUT(self):
@@ -18,7 +19,9 @@ class CustomHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(b"Missing file name in URL.")
             return
 
-        response_code, response_message = handle_upload(self.rfile, file_name, self.headers)
+        response_code, response_message = handle_upload(self.rfile,
+                                                        file_name,
+                                                        self.headers)
         self.send_response(response_code)
         self.end_headers()
         self.wfile.write(response_message.encode())
@@ -65,6 +68,7 @@ class CustomHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         """Override to suppress default console output."""
         return
+
 
 if __name__ == "__main__":
     import socketserver

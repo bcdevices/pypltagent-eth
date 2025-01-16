@@ -1,8 +1,12 @@
 import subprocess
 
+
 def execute_command(command):
     try:
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        result = subprocess.run(command,
+                                shell=True,
+                                capture_output=True,
+                                text=True)
         response = {
             "command": command,
             "retval": result.returncode,
@@ -21,4 +25,3 @@ def execute_command(command):
             "status": "failed",
             "passFail": "FAIL",
         }
-
