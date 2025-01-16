@@ -49,7 +49,10 @@ optional arguments:
 
 ## Local build
 
-```
+```console
 $ docker run --rm -v $(pwd):/app -w /app python:3 bash -c "pip install flake8 && flake8 ."
 ```
 
+```console
+$ docker run --rm -v "$(pwd):/app" python:3 bash -c "pip install autopep8 && autopep8 --in-place --recursive /app"
+```
