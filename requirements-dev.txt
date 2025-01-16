@@ -1,0 +1,2 @@
+pytest>=8.3.4  # For testing
+flake8>=6.0.0  # For linting
