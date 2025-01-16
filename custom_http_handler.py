@@ -2,11 +2,16 @@ import http.server
 import json
 import os
 from urllib.parse import urlparse
-from command_handler import execute_command
-from upload_handler import handle_upload
 
 
 class CustomHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
+    def __init__(self, *args,
+                 upload_handler=None,
+                 command_handler=None,
+                 **kwargs):
+        self.upload_handler = upload_handler
+        self.command_handler = command_handler
+        super().__init__(*args, **kwargs)
 
     def do_PUT(self):
         """Handles file uploads."""
@@ -17,8 +22,11 @@ class CustomHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(b"Missing file name in URL.")
             return
 
-        response_code, response_message = handle_upload(
-            self.rfile, file_name, self.headers)
+        response_code, response_message = self.upload_handler.handle_upload(
+            file_stream=self.rfile,
+            file_name=file_name,
+            headers=self.headers,
+        )
         self.send_response(response_code)
         self.end_headers()
         self.wfile.write(response_message.encode())
@@ -33,7 +41,8 @@ class CustomHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             try:
                 data = json.loads(body)
                 if "command" in data:
-                    response = execute_command(data["command"])
+                    response = self.command_handler.execute_command(
+                        data["command"])
                     self.send_response(200)
                     self.end_headers()
                     self.wfile.write(json.dumps(response).encode())
