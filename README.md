@@ -30,13 +30,14 @@ optional arguments:
 {
    "command": "prog.sh"
 }
+```
 
 ```json
 {
-   "command: "prog.sh",
+   "command: "prog.sh"
    "retval": 13,
    "stdout": ["line1", "line2"],
-   "stderr": [].
+   "stderr": [],
    "status": "completed",
    "passFail": "PASS"
 }
