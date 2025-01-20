@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pypltagent"
+version = "0.1.0"
+description = "An agent package allowing PLT to control an SBC/PC over Ethernet"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [{name = "Your Name", email = "your.email@example.com"}]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+dependencies = [ ]
+
+[tool.setuptools]
+packages = {find = {where = ["src"]}}
+
+[project.urls]
+Homepage = "https://github.com/yourusername/pypltagent"
