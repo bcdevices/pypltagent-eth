@@ -18,10 +18,17 @@ jobs:
       with:
         python-version: "3.9"
 
-    - name: Install dependencies
+    # - name: Install dependencies (requirements.txt)
+    #   run: |
+    #     python -m pip install --upgrade pip
+    #     if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Install dependencies (pyproject.toml)
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install build
+        python -m build --wheel
+        pip install dist/*.whl
 
     - name: Run flake8 linter
       run: |

@@ -1,3 +1,15 @@
+Metadata-Version: 2.2
+Name: pypltagent
+Version: 0.1.0
+Summary: An agent package allowing PLT to control an SBC/PC over Ethernet
+Author-email: Your Name <your.email@example.com>
+Project-URL: Homepage, https://github.com/yourusername/pypltagent
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # pypltagent-eth
 
 Python pltagent, allowing PLT to control an SBC/PC over Ethernet
