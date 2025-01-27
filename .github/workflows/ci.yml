@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    tags:
+      - 'v*.*.*' # Matches tags like v1.0.0
 
 jobs:
   test:
@@ -18,11 +21,6 @@ jobs:
       with:
         python-version: "3.9"
 
-    # - name: Install dependencies (requirements.txt)
-    #   run: |
-    #     python -m pip install --upgrade pip
-    #     if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
     - name: Install dependencies (pyproject.toml)
       run: |
         python -m pip install --upgrade pip
@@ -34,18 +32,29 @@ jobs:
         pip install flake8
         flake8 .
 
-    # - name: Run tests
-    #   run: |
-    #     pip install pytest
-    #     pytest
+  release:
+    needs: test
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    # - name: Upload test results
-    #   if: always()
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: test-results
-    #     path: pytest-report.xml
-    #
-    - name: Build deb
-      run: |
-        make
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    - name: Install dependencies
+      run: python -m pip install --upgrade pip
+
+    - name: Build .deb package
+      run: make
+
+    - name: Upload .deb file to GitHub Release
+      uses: actions/upload-release-asset@v2
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: pypltagent.noarch.deb
+        asset_name: pypltagent-1.0.0.noarch.deb
+        asset_content_type: application/vnd.debian.binary-package
