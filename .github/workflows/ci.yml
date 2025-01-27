@@ -49,13 +49,14 @@ jobs:
 
     - name: Rename .deb with version tag (no 'v')
       run: |
-        VERSION=${GITHUB_REF#refs/tags/v} # Extract the version without the 'v' prefix
+        VERSION=${GITHUB_REF#refs/tags/v} # Remove 'refs/tags/v' prefix
         mv pypltagent.noarch.deb pypltagent-${VERSION}.noarch.deb
+        echo "RENAMED_FILE=pypltagent-${VERSION}.noarch.deb" >> $GITHUB_ENV
 
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        files: pypltagent-${{ github.ref_name#refs/tags/v }}.noarch.deb
+        files: ${{ env.RENAMED_FILE }}
         tag_name: ${{ github.ref_name }}
         name: ${{ github.ref_name }}
         body: "Release for version ${{ github.ref_name }}"
