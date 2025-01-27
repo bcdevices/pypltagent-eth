@@ -33,9 +33,8 @@ jobs:
         flake8 .
 
   release:
-    needs: test
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -45,16 +44,15 @@ jobs:
       with:
         python-version: "3.9"
 
-    - name: Install dependencies
-      run: python -m pip install --upgrade pip
-
     - name: Build .deb package
       run: make
 
-    - name: Upload .deb file to GitHub Release
-      uses: actions/upload-release-asset@v2
+    - name: Release
+      uses: softprops/action-gh-release@v2
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: pypltagent.noarch.deb
-        asset_name: pypltagent-1.0.0.noarch.deb
-        asset_content_type: application/vnd.debian.binary-package
+        files: pypltagent.noarch.deb
+        tag_name: ${{ github.ref_name }}
+        name: ${{ github.ref_name }}
+        body: "Release for version ${{ github.ref_name }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
