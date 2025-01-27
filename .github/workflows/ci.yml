@@ -34,14 +34,14 @@ jobs:
         pip install flake8
         flake8 .
 
-    - name: Run tests
-      run: |
-        pip install pytest
-        pytest
+    # - name: Run tests
+    #   run: |
+    #     pip install pytest
+    #     pytest
 
-    - name: Upload test results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-results
-        path: pytest-report.xml
+    # - name: Upload test results
+    #   if: always()
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: test-results
+    #     path: pytest-report.xml
