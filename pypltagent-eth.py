@@ -61,7 +61,8 @@ class CommandHandler:
     def execute_command(self, handler):
         """Executes a command using the handler context."""
         try:
-            body = handler.rfile.read(int(handler.headers["Content-Length"])).decode()
+            contentLength = int(handler.headers["Content-Length"])
+            body = handler.rfile.read(contentLength).decode()
             data = json.loads(body)
 
             if "command" not in data:
@@ -71,7 +72,10 @@ class CommandHandler:
                 return
 
             command = data["command"]
-            result = subprocess.run(command, shell=True, capture_output=True, text=True)
+            result = subprocess.run(command,
+                                    shell=True,
+                                    capture_output=True,
+                                    text=True)
             response = {
                 "command": command,
                 "retval": result.returncode,
@@ -104,7 +108,8 @@ class CustomHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         client_ip = self.client_address[0]
         user_agent = self.headers.get("User-Agent", "Unknown User-Agent")
-        print(f"[{current_time}] {msg} Client IP: {client_ip}, User-Agent: {user_agent}")
+        print(f"[{current_time}] {msg} "
+              f"Client IP: {client_ip}, User-Agent: {user_agent}")
 
     def log_message(self, format, *args):
         """Override to suppress default logging."""
@@ -116,11 +121,15 @@ class IPv6TCPServer(socketserver.TCPServer):
     allow_reuse_address = True
     timeout = 300  # 5 minutes
 
+
 def main():
     parser = argparse.ArgumentParser(description="pypltagent-eth")
-    parser.add_argument("--host", default=HOST, help="The host to listen on")
-    parser.add_argument("--port", type=int, default=PORT, help="The port to listen on")
-    parser.add_argument("--upload-folder", default="uploads", help="Folder for uploads")
+    parser.add_argument("--host", default=HOST,
+                        help="The host to listen on")
+    parser.add_argument("--port", type=int, default=PORT,
+                        help="The port to listen on")
+    parser.add_argument("--upload-folder", default="uploads",
+                        help="Folder for uploads")
     args = parser.parse_args()
 
     def handler_factory(*handler_args, **handler_kwargs):
