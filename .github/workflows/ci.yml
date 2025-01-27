@@ -47,10 +47,15 @@ jobs:
     - name: Build .deb package
       run: make
 
+    - name: Rename .deb with version tag (no 'v')
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v} # Extract the version without the 'v' prefix
+        mv pypltagent.noarch.deb pypltagent-${VERSION}.noarch.deb
+
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        files: pypltagent.noarch.deb
+        files: pypltagent-${{ github.ref_name#refs/tags/v }}.noarch.deb
         tag_name: ${{ github.ref_name }}
         name: ${{ github.ref_name }}
         body: "Release for version ${{ github.ref_name }}"
