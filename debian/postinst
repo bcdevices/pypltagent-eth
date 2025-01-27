@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+# Ensure the 'pltagent' user exists
+if ! id -u pltagent > /dev/null 2>&1; then
+    useradd -r -s /usr/sbin/nologin -G plugdev pltagent
+    echo "User 'pltagent' created and added to 'plugdev' group."
+fi
+
+mkdir -p /var/run/pltagent/uploads
+chown -R pltagent:plugdev /var/run/pltagent/uploads
+
+# Reload systemd to recognize the new service
+systemctl daemon-reload
+
+# Enable and start the service
+systemctl enable pypltagent.service
+systemctl start pypltagent.service
+
+echo "pypltagent service installed and started."

@@ -45,3 +45,7 @@ jobs:
     #   with:
     #     name: test-results
     #     path: pytest-report.xml
+    #
+    - name: Build deb
+      run: |
+        make

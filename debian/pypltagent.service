@@ -1,0 +1,17 @@
+[Unit]
+Description=PLT Agent Ethernet Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/pypltagent-eth
+Restart=always
+User=pltagent
+Group=plugdev
+Environment=PYTHONUNBUFFERED=1
+#WorkingDirectory=/usr/bin
+WorkingDirectory=/var/run/pltagent
+ExecStartPre=/bin/mkdir -p /var/run/pltagent/uploads
+ExecStartPre=/bin/chown -R pltagent:plugdev /var/run/pltagent/uploads
+
+[Install]
+WantedBy=multi-user.target

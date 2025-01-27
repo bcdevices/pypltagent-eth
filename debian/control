@@ -1,0 +1,9 @@
+Package: pypltagent
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Blue Clover <support@bcdevices.com>
+Depends: python3, systemd
+Description: A Python script for PLT agent
+ This script helps manage PLT agent operations via ethernet.his script helps manage PLT agent operations via ethernet.
