@@ -10,6 +10,23 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - IPv6 Link-Local , port 8080
 
+## Installation (.deb)
+
+```console
+operator@progpc:~$ sudo apt install -y ./pypltagent-0.1.4.noarch.deb
+:
+Preparing to unpack .../pypltagent-0.1.4.noarch.deb ...
+Unpacking pypltagent (1.0) ...
+Setting up pypltagent (1.0) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/pypltagent.service → /usr/lib/systemd/system/pypltagent.service.
+pypltagent service installed and started.
+OK
+:
+operator@progpc:~$
+```
+
+## Command Line Usage
+
 ```
 usage: pypltagent-eth.py [-h] [--host HOST] [--port PORT]
                          [--upload-folder UPLOAD_FOLDER]
