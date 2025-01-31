@@ -4,7 +4,7 @@ Python pltagent, allowing PLT to control an SBC/PC over Ethernet
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-©2025 Blue Clover Devices - ALL RIGHTS RESERVED
+© 2025 Blue Clover Devices - ALL RIGHTS RESERVED
 
 [![CI](https://github.com/bcdevices/pypltagent-eth/actions/workflows/ci.yml/badge.svg)](https://github.com/bcdevices/pypltagent-eth/actions/workflows/ci.yml)
 
@@ -24,6 +24,31 @@ OK
 :
 operator@progpc:~$
 ```
+
+## Usage (PLT test plan)
+
+```yaml
+title: "Remote command execution"
+suite:
+ - ident: AGENT
+   title: "New SBC Session"
+   steps:
+    - command: agentCfg PROGSBC
+      id: "a0:36:bc:57:9c:a8" # Ethernet MAC address of pypltagent host
+      with:
+       - "firmware.hex"
+    - command: agentExec PROGPC "hostname"
+```
+
+See also:
+
+[PLT Reference Documentation](https://docs.pltcloud.com/):
+
+- [Test Plan Reference](https://docs.pltcloud.com/TestPlanReference/) >
+  [Test Commands](https://docs.pltcloud.com/TestPlanReference/command/) :
+
+  - [agentCfg - Configure Agent](https://docs.pltcloud.com/TestPlanReference/command/agentCfg/)
+  - [agentExec - Execute command on Agent](https://docs.pltcloud.com/TestPlanReference/command/agentExec/)
 
 ## Command Line Usage
 
