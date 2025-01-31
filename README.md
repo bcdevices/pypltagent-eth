@@ -12,6 +12,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Installation (.deb)
 
+On Debian-based Linux platforms, pypltagent can be installed using ``apt install``:
+
 ```console
 operator@progpc:~$ sudo apt install -y ./pypltagent-0.1.4.noarch.deb
 :
@@ -33,11 +35,11 @@ suite:
  - ident: AGENT
    title: "New SBC Session"
    steps:
-    - command: agentCfg PROGSBC
+    - command: agentCfg SBC
       id: "a0:36:bc:57:9c:a8" # Ethernet MAC address of pypltagent host
       with:
        - "firmware.hex"
-    - command: agentExec PROGPC "hostname"
+    - command: agentExec SBC "hostname"
 ```
 
 See also:
